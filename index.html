@@ -1,0 +1,1892 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PAQUETE DE FORMULARIOS DE VIÁTICOS-ENTRE PARES</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eef2f5;color:#111}
+header{background:#173f60;color:#fff;padding:18px 24px}
+header h1{margin:0;font-size:24px}
+header p{margin:5px 0 0;font-size:14px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;background:#fff;border-bottom:1px solid #ccd5dc}
+button{border:0;border-radius:7px;padding:10px 15px;font-weight:700;cursor:pointer;background:#1769aa;color:#fff}
+button.secondary{background:#18854b}
+button.light{background:#e5ebf0;color:#111}
+.tabs{display:flex;gap:8px;padding:12px 20px;flex-wrap:wrap;background:#f7f9fb}
+.tabs button{background:#fff;color:#174c73;border:2px solid transparent}
+.tabs button.active{border-color:#2c7be5}
+.workspace{display:grid;grid-template-columns:360px minmax(0,1fr);gap:18px;padding:18px;align-items:start}
+.panel{background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 10px #0001}
+.panel h2{font-size:19px;margin:0 0 8px}
+.panel h3{font-size:14px;margin:18px 0 8px;color:#174c73;border-bottom:1px solid #d9e0e5;padding-bottom:6px}
+.field{margin:9px 0}
+.field label{display:block;font-size:12px;font-weight:700;margin-bottom:4px}
+input,textarea,select{width:100%;font:14px Arial;padding:8px;border:1px solid #aebbc5;border-radius:5px;background:#fff}
+textarea{min-height:65px;resize:vertical}
+.hidden{display:none}
+.sheet{background:#dfe5ea;padding:18px;overflow:auto}
+.paper{background:#fff;color:#111;margin:auto;box-shadow:0 2px 8px #0002;padding:18px;max-width:816px}
+.paper.legal{max-width:816px}
+.center{text-align:center}
+.small{font-size:9px}
+.tiny{font-size:8px}
+.title{font-size:16px;font-weight:700;text-align:center}
+.subtitle{font-size:11px;font-weight:700;text-align:center}
+table{width:100%;border-collapse:collapse;font-size:9px}
+th,td{border:1px solid #333;padding:4px;vertical-align:middle}
+th{background:#e9e9e9}
+.no-border td,.no-border th{border:0}
+.line{border-bottom:1px solid #222;min-height:17px}
+.blank{height:24px}
+.fixedtext{font-size:10px;line-height:1.25}
+.form1 .topspace{height:8px}
+.form2 .missionbox{height:82px}
+.form3 .missiontable td{height:22px}
+.form4 .bluehead{background:#b8cce4;font-weight:700;text-align:center}
+.form4 td,.form4 th{font-size:8px;padding:3px}
+.sig{height:58px}
+.note{font-size:8px}
+
+.form1{font-size:10px;line-height:1.05}
+
+.form1head{font-size:10px}
+.f1officialhead{display:grid;grid-template-columns:48% 52%;gap:12px;margin-top:10px;align-items:end}
+.f1headleft,.f1headright{position:relative}
+.f1headlabel{font-size:8px;font-weight:700;display:inline-block;vertical-align:bottom}
+.f1officialnote{font-size:6px;color:#777;line-height:1;text-align:center}
+.f1headleft .f1headlabel{position:absolute;left:0;bottom:0}
+.f1headleft .f1officialnote{position:absolute;left:0;bottom:-8px;width:66px}
+.f1headleft .f1headline{height:18px;border-bottom:1px solid #222;text-align:center;padding-top:0;font-size:15px}
+.f1headrow{position:relative;height:35px}
+.f1headrow .f1headlabel{position:absolute;left:0;top:0;width:190px;text-align:right;padding-right:8px;font-size:9px}
+.f1headrow .f1officialnote{position:absolute;left:132px;top:13px;width:68px}
+.f1headrow .f1headline{height:25px;border-bottom:1px solid #222;margin-left:190px}
+.f1payment{margin-top:2px}
+.f1payment .f1headlabel{width:215px}
+.f1payment .f1officialnote{left:158px}
+.f1payment .f1headline{margin-left:215px}
+.f1fund{display:grid;grid-template-columns:145px 1fr;align-items:center;column-gap:12px;margin:1px 18px 11px;font-size:10px}
+.f1check{font-weight:700;white-space:nowrap;line-height:16px}
+.f1fundname{font-size:15px;border-bottom:1px solid #222;text-align:center;padding:0 70px 1px;white-space:nowrap;line-height:1}
+.f1fundname small{display:block;font-size:6px;color:#777;margin-top:2px;font-weight:700}
+
+.f1label{font-size:9px;font-weight:700;display:block;margin-bottom:2px}
+.f1line{height:19px;border-bottom:1px solid #222;font-size:11px;padding:1px 5px}
+.f1fund{display:flex;align-items:flex-end;gap:20px;margin:10px 12px 12px;font-size:10px}
+.f1fundname{font-size:15px;border-bottom:1px solid #222;padding:0 80px 2px 80px;white-space:nowrap}
+.f1party,.f1detail,.f1sign{table-layout:fixed}
+.f1party{margin-top:4px}
+.f1party th{font-size:9px;padding:4px}
+.f1party td{height:25px;padding:3px 6px}
+.f1labcell{font-size:9px;font-weight:700;text-align:right;white-space:normal}
+.f1value{font-size:12px;text-align:left;border-bottom:1px solid #222;background:#fff;min-height:22px}
+.f1party td:nth-child(1){width:24%}
+.f1party td:nth-child(2){width:36%}
+.f1party td:nth-child(3){width:20%}
+.f1party td:nth-child(4){width:20%}
+.f1detail{margin-top:7px}
+.f1detail th{height:17px;font-size:8px;text-align:center}
+.f1detail td{font-size:8px}
+.f1detail .f1left{font-weight:700;text-align:left;vertical-align:middle;padding:3px 6px}
+.f1moneyrow{display:flex;justify-content:flex-end;gap:5px;min-height:14px;align-items:center}
+.f1moneyrow span:first-child{min-width:165px;text-align:right}
+.graybox{display:inline-block;width:20px;height:12px;background:#d4d4d4;vertical-align:middle}
+
+.f1detail th{font-size:9px}
+.f1detail td{font-size:9px;min-height:30px}
+.f1left{vertical-align:top;line-height:1.8}
+
+.f1sign{margin-top:7px}
+.f1sign th,.f1control th{height:18px;font-size:9px;text-align:center;padding:2px}
+.f1box{position:relative;padding:0!important;vertical-align:top}
+.f1boxtitle{height:17px;text-align:center;font-size:8px;font-weight:700;color:#888;padding-top:2px}
+.f1sign .f1box{height:68px}
+.f1received{font-size:9px;color:#888;padding:5px 10px}
+.f1account,.f1authorization{height:78px!important}
+.f1doc{position:absolute;left:7px;bottom:9px;font-size:8px;color:#777}
+.f1authtext{position:absolute;left:9px;top:26px;font-size:8px;line-height:1.35;color:#777}
+.f1control{margin-top:7px}
+.f1control .f1box{height:84px}
+.f1reftext{position:absolute;left:8px;bottom:7px;font-size:9px;color:#777;line-height:1.6}
+.f1notice{font-size:6.5px;margin-top:5px;line-height:1.05}
+
+
+
+
+/* V15 — Formulario 2: reconstrucción visual basada en el original */
+.form2{
+  position:relative;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:10px;
+  line-height:1.15;
+  min-height:1040px;
+}
+.f2-topline{
+  display:grid;
+  grid-template-columns:28px 1fr;
+  width:86%;
+  margin:2px auto 0;
+  font-size:10px;
+  line-height:1.25;
+  align-items:start;
+}
+.f2-topline>span{font-size:10px}
+.f2-country{
+  margin-top:34px;
+  text-align:center;
+  font-size:15px;
+  font-weight:700;
+}
+.f2-main-title{
+  margin-top:12px;
+  text-align:center;
+  font-size:13px;
+  font-weight:700;
+  line-height:1.28;
+}
+.f2-finanzas{
+  margin-top:13px;
+  text-align:center;
+  font-size:12px;
+  font-weight:700;
+}
+.f2-info{
+  width:88%;
+  margin:11px auto 0;
+  border-collapse:collapse;
+  table-layout:fixed;
+  font-size:10px;
+}
+.f2-info td{border:0;padding:4px 0;vertical-align:middle}
+.f2-label{
+  width:39%;
+  font-weight:700;
+  padding-right:10px!important;
+  white-space:nowrap;
+}
+.f2-value{
+  width:61%;
+  border-bottom:1px solid #777!important;
+  min-height:22px;
+  font-size:11px;
+  padding-left:7px!important;
+}
+.f2-edit{
+  display:inline-block;
+  min-width:34px;
+  min-height:14px;
+  border-bottom:1px solid #888;
+  text-align:center;
+  vertical-align:bottom;
+}
+.f2-period .f2-edit{min-width:32px}
+.f2-report{
+  text-align:center;
+  position:relative;
+  padding-bottom:15px!important;
+}
+.f2-report small{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  font-size:7px;
+  font-weight:400;
+}
+.f2-section-title{
+  width:88%;
+  margin:15px auto 8px;
+  font-size:10px;
+}
+.f2-section-title>span{
+  display:inline-block;
+  width:34px;
+  text-align:center;
+  margin-right:8px;
+  font-weight:700;
+}
+.f2-missionbox{
+  width:90%;
+  height:190px;
+  margin:0 auto;
+  border:2px solid #888;
+  padding:11px 13px;
+  font-size:14px;
+  line-height:1.35;
+}
+.f2-monthline{min-width:105px}
+.f2-section-ii{margin-top:16px;margin-bottom:10px}
+.f2-expense{
+  width:88%;
+  margin:0 auto;
+  table-layout:fixed;
+  font-size:9px;
+}
+.f2-expense th,.f2-expense td{
+  border:1px solid #777;
+  padding:3px 5px;
+  height:23px;
+}
+.f2-expense th{
+  background:#fff;
+  font-weight:700;
+  text-align:center;
+}
+.f2-expense .f2-detalle{width:34%}
+.f2-expense .f2-viatico{width:13%}
+.f2-summary-title{
+  width:88%;
+  margin:27px auto 8px;
+  font-weight:700;
+  font-size:10px;
+}
+.f2-summary{
+  width:72%;
+  margin-left:17%;
+  font-size:10px;
+}
+.f2-summary>div{
+  height:28px;
+  display:flex;
+  align-items:center;
+}
+.f2-summary>div span{width:22px}
+.f2-summary>div b{
+  margin-left:auto;
+  width:43%;
+  border-bottom:2px solid #999;
+  padding-bottom:3px;
+  font-weight:400;
+}
+.f2-signatures{
+  width:82%;
+  margin:48px auto 0;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:70px;
+  text-align:center;
+  font-size:10px;
+}
+.f2-signline{
+  border-bottom:2px solid #999;
+  height:1px;
+  margin-bottom:4px;
+}
+.f2-seal{
+  margin-top:35px;
+  text-align:center;
+  font-size:40px;
+  line-height:1;
+  color:#ddd;
+  text-shadow:0 0 0 #aaa;
+}
+.f2-page{
+  position:absolute;
+  right:2px;
+  bottom:0;
+  font-size:10px;
+}
+
+
+/* V18 — Formulario 3 reconstruido con proporciones del original A4 */
+.form3-original{
+  width:100%;
+  min-height:297mm;
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#111;
+  font-size:11px;
+}
+.f3-header{
+  position:relative;
+  height:158px;
+}
+.f3-logo{
+  position:absolute;
+  left:9%;
+  top:71px;
+  width:170px;
+  text-align:center;
+}
+.f3-logo img{width:170px;height:auto;display:block}
+.f3-heading{
+  position:absolute;
+  left:38%;
+  top:58px;
+  width:48%;
+  text-align:center;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.55;
+}
+.f3-title{
+  margin-top:16px;
+  font-size:13px;
+}
+.f3-info{width:83%;margin:0 auto}
+.f3-row{
+  display:flex;
+  align-items:end;
+  min-height:34px;
+  white-space:nowrap;
+}
+.f3-label{font-weight:700;margin-right:7px}
+.f3-line{
+  border-bottom:1px solid #111;
+  min-height:22px;
+  padding:0 8px 2px;
+  font-size:12px;
+  box-sizing:border-box;
+}
+.f3-wide{width:61%}
+.f3-deptline{width:37%;font-size:12px}
+.f3-cheque-label{margin-left:auto}
+.f3-cheque{width:13%}
+.f3-name{width:31%;font-size:12px}
+.f3-cedula-label{margin-left:4px}
+.f3-cedula{width:13%;font-size:12px}
+.f3-planilla-label{margin-left:5px}
+.f3-planilla{width:7%;font-size:12px}
+.f3-lugar{width:45%;font-size:12px}
+.f3-fondo-label{margin-left:auto}
+.f3-fondo{width:13%}
+.f3-mission-period{
+  position:relative;
+  width:83%;
+  height:128px;
+  margin:10px auto 0;
+}
+.f3-period-label{
+  position:absolute;
+  top:0;
+  left:27%;
+  width:46%;
+  text-align:center;
+  font-size:11px;
+  font-weight:700;
+}
+.f3-period-row{
+  position:absolute;
+  left:0;
+  width:100%;
+  height:35px;
+  display:flex;
+  align-items:end;
+}
+.f3-period-row:first-of-type{top:38px}
+.f3-period-row:last-of-type{top:84px}
+.f3-period-kind{
+  width:6%;
+  font-size:11px;
+  font-weight:700;
+  align-self:center;
+}
+.f3-period-time{
+  width:9%;
+  min-height:20px;
+  border-bottom:1px solid #111;
+  text-align:center;
+  font-size:12px;
+  padding-bottom:2px;
+}
+.f3-date-cell{
+  width:14%;
+  text-align:center;
+  margin-left:5%;
+}
+.f3-date-cell:first-of-type{margin-left:17%}
+.f3-date-cell div{
+  min-height:20px;
+  border-bottom:1px solid #111;
+  font-size:12px;
+}
+.f3-date-cell span{
+  display:block;
+  font-size:10px;
+  font-weight:700;
+  margin-top:2px;
+}
+.f3-table-title{
+  width:83%;
+  margin:0 auto 10px;
+  text-align:center;
+  font-size:11px;
+  font-weight:700;
+}
+.f3-table{
+  width:83%;
+  margin:0 auto;
+  border-collapse:collapse;
+  table-layout:fixed;
+  font-size:9px;
+}
+.f3-table th,.f3-table td{
+  border:1px solid #111;
+  text-align:center;
+  padding:0 2px;
+  height:20px;
+  box-sizing:border-box;
+}
+.f3-table th{font-weight:700}
+.f3-table thead tr:first-child th{height:29px}
+.f3-table thead tr:nth-child(2) th{height:19px}
+.f3-table .c-day{width:6%}
+.f3-table .c-month{width:8%}
+.f3-table .c-time{width:11%}
+.f3-table .c-desc{width:34%}
+.f3-table .c-sign{width:27%}
+.f3-table td:nth-child(5){
+  text-align:left;
+  padding-left:5px;
+  font-size:9px;
+}
+.f3-conclusion{
+  width:83%;
+  margin:18px auto 0;
+  font-size:10px;
+  line-height:1;
+}
+.f3-conclusion b{
+  display:inline-block;
+  vertical-align:middle;
+  width:31%;
+}
+.f3-conclusion-line{
+  display:inline-block;
+  vertical-align:middle;
+  border-bottom:2px solid #111;
+  height:1px;
+  width:68%;
+  margin-left:-2px;
+}
+.f3-conclusion-line + .f3-conclusion-line{
+  display:block;
+  width:100%;
+  margin:18px 0 0;
+}
+.f3-note{
+  width:83%;
+  margin:18px auto 0;
+  border-top:2px solid #111;
+  padding-top:5px;
+  font-size:8px;
+}
+@media print{
+  .form3-original{min-height:0;transform:scale(.98);transform-origin:top left;width:102%}
+}
+
+@media print{
+  body{background:#fff}
+  header,.toolbar,.tabs,.panel{display:none!important}
+  .workspace{display:block;padding:0}
+  .sheet{padding:0;background:#fff}
+  .paper{box-shadow:none;max-width:none;margin:0;padding:6mm 8mm}
+  .paper.letter{width:216mm;height:279mm;min-height:279mm;overflow:hidden}
+  .paper.a4{width:210mm;min-height:297mm}
+  .paper.legal{width:216mm;min-height:356mm}
+  .form1{transform:scale(.99);transform-origin:top left;width:100%}
+  .no-print{display:none!important}
+}
+
+@media print{
+  .form2{
+    transform:scale(.98);
+    transform-origin:top left;
+    width:102%;
+    min-height:0;
+  }
+}
+
+@page{size:Letter;margin:0}
+
+@media print{
+  .paper.a4{page:form3a4}
+  .form3-original{
+    transform:scale(1);
+    transform-origin:top left;
+    width:100%;
+  }
+}
+@page form4legal{size:Legal;margin:0}
+@page form3a4{
+  size:A4;
+  margin:0;
+}
+
+
+/* V11 — ajuste visual Formulario 1: bloque derecho del encabezado */
+.form1 .official-right,
+.formulario1 .official-right,
+#form1 .official-right {
+  transform: translateY(8px);
+}
+
+
+/* V12 — Formulario 1: bajar el bloque derecho del encabezado */
+.form1 .official-right,
+.formulario1 .official-right,
+#form1 .official-right,
+.official-right {
+  transform: translateY(22px) !important;
+}
+
+
+/* V13 — Formulario 1: alinear bloque izquierdo con Número de Consecutivo */
+.form1 .f1headleft {
+  transform: translateY(-54px) !important;
+}
+
+
+/* V14 — Formulario 1: bajar ligeramente el bloque compacto del encabezado */
+.form1 .f1officialhead {
+  transform: translateY(12px) !important;
+}
+
+
+/* V21 — Formulario 3: encabezado alineado con el original */
+.f3-logo{
+  left:7% !important;
+  width:170px;
+}
+.f3-heading{
+  left:25% !important;
+  width:50% !important;
+  text-align:center !important;
+}
+
+
+/* V27 — Formulario 3: separar encabezado de misión para evitar solapamientos */
+
+/* V29 — Formulario 3: distribución del bloque MISIÓN OFICIAL según original */
+.form3-original .f3-mission-period{
+  position:relative !important;
+  width:90% !important;
+  height:122px !important;
+  margin:8px auto 0 !important;
+}
+.form3-original .f3-period-label{
+  position:absolute !important;
+  top:0 !important;
+  left:44% !important;
+  width:24% !important;
+  text-align:center !important;
+  font-size:10px !important;
+  font-weight:700 !important;
+}
+.form3-original .f3-period-row{
+  position:absolute !important;
+  left:0 !important;
+  width:100% !important;
+  height:34px !important;
+  display:block !important;
+}
+.form3-original .f3-period-row:first-of-type{top:25px !important}
+.form3-original .f3-period-row:last-of-type{top:76px !important}
+
+.form3-original .f3-period-kind{
+  position:absolute !important;
+  left:0 !important;
+  top:9px !important;
+  width:7% !important;
+  font-size:11px !important;
+  font-weight:700 !important;
+}
+.form3-original .f3-period-time{
+  position:absolute !important;
+  left:6% !important;
+  top:0 !important;
+  width:12% !important;
+  min-height:20px !important;
+  font-size:12px !important;
+  text-align:center !important;
+}
+.form3-original .f3-date-cell{
+  position:absolute !important;
+  top:0 !important;
+  width:14% !important;
+  margin-left:0 !important;
+  text-align:center !important;
+}
+.form3-original .f3-period-row .f3-date-cell:nth-of-type(1){left:28% !important}
+.form3-original .f3-period-row .f3-date-cell:nth-of-type(2){left:48% !important}
+.form3-original .f3-period-row .f3-date-cell:nth-of-type(3){left:68% !important}
+.form3-original .f3-date-cell div{
+  min-height:20px !important;
+  font-size:12px !important;
+}
+.form3-original .f3-date-cell span{
+  font-size:9px !important;
+  font-weight:700 !important;
+  display:block !important;
+  margin-top:2px !important;
+}
+.form3-original .f3-table-title{
+  margin-top:0 !important;
+}
+
+
+/* V30 — Formulario 3: distribución exacta y estable del bloque superior */
+.form3-original .f3-info{
+  width:90% !important;
+  margin:0 auto !important;
+}
+.form3-original .f3-info > .f3-row:nth-child(2){
+  min-height:42px !important;
+  align-items:end !important;
+}
+.form3-original .f3-lugar{
+  width:45% !important;
+  text-align:center !important;
+}
+.form3-original .f3-fondo-label{
+  margin-left:auto !important;
+}
+.form3-original .f3-fondo{
+  width:14% !important;
+}
+
+/* Misión oficial: no flex; cada elemento tiene su propia posición,
+   evitando que los datos se monten entre sí. */
+.form3-original .f3-mission-period{
+  position:relative !important;
+  width:90% !important;
+  height:135px !important;
+  margin:0 auto !important;
+}
+.form3-original .f3-period-label{
+  position:absolute !important;
+  top:0 !important;
+  left:35% !important;
+  width:30% !important;
+  text-align:center !important;
+  font-size:10px !important;
+  line-height:1 !important;
+  font-weight:700 !important;
+}
+.form3-original .f3-period-row{
+  position:absolute !important;
+  left:0 !important;
+  width:100% !important;
+  height:38px !important;
+  display:block !important;
+}
+.form3-original .f3-period-row:first-of-type{
+  top:24px !important;
+}
+.form3-original .f3-period-row:last-of-type{
+  top:78px !important;
+}
+.form3-original .f3-period-kind{
+  position:absolute !important;
+  left:0 !important;
+  top:7px !important;
+  width:7% !important;
+  margin:0 !important;
+  font-size:11px !important;
+  font-weight:700 !important;
+}
+.form3-original .f3-period-time{
+  position:absolute !important;
+  left:6% !important;
+  top:0 !important;
+  width:13% !important;
+  min-height:22px !important;
+  border-bottom:1px solid #111 !important;
+  text-align:center !important;
+  font-size:12px !important;
+  padding:0 3px 2px !important;
+  box-sizing:border-box !important;
+}
+.form3-original .f3-date-cell{
+  position:absolute !important;
+  top:0 !important;
+  width:14% !important;
+  margin:0 !important;
+  text-align:center !important;
+}
+.form3-original .f3-date-cell:nth-child(3){left:27% !important}
+.form3-original .f3-date-cell:nth-child(4){left:47% !important}
+.form3-original .f3-date-cell:nth-child(5){left:67% !important}
+.form3-original .f3-date-cell div{
+  min-height:22px !important;
+  border-bottom:1px solid #111 !important;
+  font-size:12px !important;
+  line-height:20px !important;
+}
+.form3-original .f3-date-cell span{
+  display:block !important;
+  margin-top:2px !important;
+  font-size:9px !important;
+  font-weight:700 !important;
+}
+.form3-original .f3-table-title{
+  width:90% !important;
+  margin:0 auto 10px !important;
+  text-align:center !important;
+}
+
+
+/* V31 — Formulario 3: bajar el bloque DEL/AL y sus fechas */
+.form3-original .f3-period-row:first-of-type{
+  top:38px !important;
+}
+.form3-original .f3-period-row:last-of-type{
+  top:96px !important;
+}
+.form3-original .f3-mission-period{
+  height:150px !important;
+}
+.form3-original .f3-table-title{
+  margin-top:0 !important;
+}
+
+
+/* V32 — Formulario 3: separación vertical real entre LUGAR, DEL y AL */
+.form3-original .f3-mission-period{
+  position:relative !important;
+  height:185px !important;
+  margin:0 auto !important;
+}
+.form3-original .f3-period-row:first-of-type{
+  top:58px !important;
+}
+.form3-original .f3-period-row:last-of-type{
+  top:120px !important;
+}
+.form3-original .f3-period-label{
+  top:20px !important;
+}
+.form3-original .f3-table-title{
+  margin-top:0 !important;
+}
+
+
+/* V33 — Formulario 3: bajar el bloque DEL/AL, pero acercar DEL y AL entre sí */
+.form3-original .f3-mission-period{
+  height:160px !important;
+  margin-top:0 !important;
+}
+.form3-original .f3-period-label{
+  top:20px !important;
+}
+.form3-original .f3-period-row:first-of-type{
+  top:55px !important;
+}
+.form3-original .f3-period-row:last-of-type{
+  top:100px !important;
+}
+
+
+/* V34 — Formulario 3: bloque DEL/AL compacto y ligeramente debajo de MISIÓN OFICIAL */
+.form3-original .f3-mission-period{
+  height:128px !important;
+  margin-top:0 !important;
+}
+.form3-original .f3-period-label{
+  top:18px !important;
+}
+.form3-original .f3-period-row:first-of-type{
+  top:42px !important;
+}
+.form3-original .f3-period-row:last-of-type{
+  top:82px !important;
+}
+.form3-original .f3-table-title{
+  margin-top:0 !important;
+}
+
+
+/* V35 — Formulario 3: bajar el bloque de fechas sin separarlo demasiado */
+.form3-original .f3-mission-period{
+  height:138px !important;
+  margin-top:0 !important;
+}
+.form3-original .f3-period-label{
+  top:10px !important;
+}
+.form3-original .f3-period-row:first-of-type{
+  top:52px !important;
+}
+.form3-original .f3-period-row:last-of-type{
+  top:92px !important;
+}
+
+
+/* V36 — Formulario 3: cuatro columnas reales HORA / DIA / MES / AÑO */
+.form3-original .f3-mission-period{
+  position:relative !important;
+  width:90% !important;
+  height:138px !important;
+  margin:0 auto !important;
+}
+.form3-original .f3-period-label{
+  position:absolute !important;
+  top:12px !important;
+  left:40% !important;
+  width:25% !important;
+  text-align:center !important;
+  font-size:10px !important;
+  font-weight:700 !important;
+  z-index:5 !important;
+}
+.form3-original .f3-period-row{
+  position:absolute !important;
+  left:0 !important;
+  width:100% !important;
+  height:36px !important;
+  display:block !important;
+}
+.form3-original .f3-period-row:first-of-type{top:42px !important}
+.form3-original .f3-period-row:last-of-type{top:91px !important}
+
+/* DEL / AL */
+.form3-original .f3-period-kind{
+  position:absolute !important;
+  left:0 !important;
+  top:7px !important;
+  width:7% !important;
+  font-size:10px !important;
+  font-weight:700 !important;
+}
+
+/* HORA — primera columna */
+.form3-original .f3-period-time{
+  position:absolute !important;
+  left:7% !important;
+  top:0 !important;
+  width:18% !important;
+  min-height:22px !important;
+  border-bottom:1px solid #111 !important;
+  box-sizing:border-box !important;
+  text-align:center !important;
+  font-size:11px !important;
+  padding:0 3px 2px !important;
+}
+
+/* DIA / MES / AÑO — tres columnas independientes */
+.form3-original .f3-period-row .f3-date-cell{
+  position:absolute !important;
+  top:0 !important;
+  width:15% !important;
+  margin:0 !important;
+  text-align:center !important;
+}
+.form3-original .f3-period-row .f3-date-cell:nth-child(3){left:31% !important}
+.form3-original .f3-period-row .f3-date-cell:nth-child(4){left:51% !important}
+.form3-original .f3-period-row .f3-date-cell:nth-child(5){left:71% !important}
+
+.form3-original .f3-date-cell div{
+  min-height:22px !important;
+  border-bottom:1px solid #111 !important;
+  line-height:20px !important;
+  font-size:11px !important;
+}
+.form3-original .f3-date-cell span{
+  display:block !important;
+  margin-top:2px !important;
+  font-size:8px !important;
+  font-weight:700 !important;
+}
+
+
+/* V37 — Formulario 3: bajar el renglón DEL sin separar el bloque */
+.form3-original .f3-period-label{
+  top:10px !important;
+}
+.form3-original .f3-period-row:first-of-type{
+  top:62px !important;
+}
+.form3-original .f3-period-row:last-of-type{
+  top:104px !important;
+}
+.form3-original .f3-mission-period{
+  height:145px !important;
+}
+
+
+/* V38 — corrección real: :first-of-type no funcionaba porque MISIÓN OFICIAL
+   también es un DIV. Se posicionan ahora las dos filas por su orden real. */
+.form3-original .f3-mission-period{
+  height:145px !important;
+}
+.form3-original .f3-period-label{
+  top:8px !important;
+}
+.form3-original .f3-period-row:nth-of-type(2){
+  top:48px !important;
+}
+.form3-original .f3-period-row:nth-of-type(3){
+  top:91px !important;
+}
+
+
+/* V41 — Formulario 4: reconstrucción fiel en tamaño Legal */
+.form4{
+  width:100%;
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:7.5px;
+  line-height:1.12;
+  color:#111;
+}
+.form4 table{width:100%;border-collapse:collapse;table-layout:fixed}
+.form4 td,.form4 th{border:1px solid #111;padding:2px 3px;vertical-align:middle}
+.form4 th{font-weight:700;text-align:center}
+.f4-version{font-weight:700;font-size:8px;margin-bottom:5px}
+.f4-main-title{text-align:center;font-weight:700;font-size:9.5px;line-height:1.35}
+.f4-title-large{font-size:10px;margin-bottom:5px}
+.f4-head{border:0!important;margin-bottom:4px}
+.f4-head td{border:0!important;height:12px}
+.f4-datehead{text-align:right}
+.f4-line,.f4-editline{display:inline-block;min-width:92px;border-bottom:1px solid #111;height:10px;vertical-align:bottom;text-align:center}
+.f4-editline{min-width:70px}
+.f4-box{margin-top:4px}
+.f4-authorize td{height:48px;font-size:7.2px;text-align:left;padding:4px}
+.f4-mission th{width:13%}
+.f4-mission td:nth-child(2){width:28%}
+.f4-mission td:nth-child(5){width:14%}
+.f4-mission td:nth-child(7){width:14%}
+.f4-fixed{font-size:7.2px}
+.f4-center{text-align:center}
+.f4-editcell{text-align:center;font-size:8px}
+.f4-benef th{font-size:7px;background:#ddd}
+.f4-benef td{text-align:center;height:18px;font-size:8px}
+.f4-benef .f4-category{background:#b8d3ea;font-weight:700}
+.f4-blue{margin-top:4px;background:#9fc5e4;border:1px solid #111;text-align:center;font-weight:700;padding:3px;font-size:8px}
+.f4-viaticos th{font-size:6.7px}
+.f4-viaticos td{height:14px;text-align:center}
+.f4-subtotal{text-align:right!important;font-weight:700}
+.f4-totalbar{height:18px;border:1px solid #111;background:#d9d9d9;margin-top:4px;font-weight:700;display:flex;align-items:center;justify-content:center;position:relative}
+.f4-totalbar span{position:absolute;right:7px;background:#fff;padding-left:8px;min-width:80px;text-align:right}
+.f4-transport th{font-size:7px;background:#bfbfbf}
+.f4-transport td{height:13px;font-size:6.9px;text-align:center}
+.f4-transport th:nth-child(1){width:10%}.f4-transport th:nth-child(2){width:11%}.f4-transport th:nth-child(3){width:26%}.f4-transport th:nth-child(4){width:24%}.f4-transport th:nth-child(5){width:14%}.f4-transport th:nth-child(6){width:15%}
+.f4-transport .f4-blankrows td{height:12px}
+.f4-exterior th{background:#bfbfbf;font-size:6.5px}
+.f4-exterior td{height:12px}
+.f4-lower{display:grid;grid-template-columns:44% 56%;gap:6px;margin-top:7px}
+.f4-lower>div{min-width:0}
+.f4-budget th{background:#bfbfbf;font-size:7.5px}
+.f4-budget td{height:19px;text-align:center;font-size:7px}
+.f4-budget td:last-child,.f4-budget th:last-child{width:16%}
+.f4-prepared{margin-top:4px}
+.f4-prepared th{font-size:7px;text-align:left}
+.f4-prepared td{height:18px;font-size:8px}
+.f4-signs th{font-size:6.8px;text-align:left;height:17px}
+.f4-signs td{height:27px}
+.f4-signspace{height:25px!important}
+.f4-seals{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:7px}
+.f4-sealbox{border:1px solid #111;height:75px;text-align:center;font-size:6.8px;padding-top:4px}
+.f4-sealbox>div{height:55px;border-top:1px solid #111;margin-top:3px}
+.f4-cgr{width:33%;margin:8px auto 0;border:1px solid #111;text-align:center;height:78px;font-size:7px;padding-top:4px}
+.f4-cgr>div{height:56px;border-top:1px solid #111;margin-top:4px}
+@media print{
+  .paper.legal{width:216mm;min-height:356mm;padding:5mm 8mm}
+  .paper.legal .form4{transform:scale(.98);transform-origin:top left;width:102%}
+}
+
+
+/* V42 — Formulario 4: columnas de transporte con proporciones del original */
+.form4 .f4-transport{
+  width:100% !important;
+  table-layout:fixed !important;
+}
+.form4 .f4-transport th,
+.form4 .f4-transport td{
+  box-sizing:border-box !important;
+  vertical-align:middle !important;
+  overflow-wrap:break-word !important;
+  word-break:normal !important;
+}
+.form4 .f4-transport tr:first-child th{
+  text-align:left !important;
+  padding-left:5px !important;
+}
+.form4 .f4-transport tr:nth-child(2) th{
+  font-size:7px !important;
+  line-height:1.05 !important;
+}
+.form4 .f4-transport td{
+  font-size:7px !important;
+  line-height:1.05 !important;
+  height:23px !important;
+}
+.form4 .f4-transport td:nth-child(3),
+.form4 .f4-transport td:nth-child(4){
+  font-size:7px !important;
+  text-align:center !important;
+  padding:2px 4px !important;
+}
+.form4 .f4-transport td:nth-child(5),
+.form4 .f4-transport td:nth-child(6){
+  text-align:center !important;
+}
+
+
+/* V43 — Formulario 4: campo El suscrito */
+.form4 .f4-inline-edit{
+  display:inline-block;
+  min-width:145px;
+  border-bottom:1px solid #111;
+  line-height:1.1;
+  padding:0 3px 1px;
+  vertical-align:baseline;
+}
+
+
+.form4 .f4-inline-edit{display:inline;border:0;padding:0;min-width:0}
+
+
+/* V45 — Formulario 4: fechas del bloque de autorización vinculadas a los campos editables */
+.form4 .f4-inline-date{
+  display:inline-block;
+  min-width:42px;
+  text-align:center;
+  border-bottom:1px solid #111;
+  line-height:1.05;
+}
+
+
+/* V50 — Formulario 4: espacio institucional en blanco al final del total */
+.form4 .f4-totalbar{
+  background:linear-gradient(to right,#d9d9d9 0%,#d9d9d9 77%,#fff 77%,#fff 100%) !important;
+  justify-content:flex-start !important;
+  text-align:center !important;
+}
+.form4 .f4-totalbar::after{
+  content:"";
+  position:absolute;
+  left:77%;
+  top:-1px;
+  bottom:-1px;
+  width:1px;
+  background:#111;
+}
+.form4 .f4-totalbar{
+  padding-right:23%;
+  box-sizing:border-box;
+}
+
+
+/* V51 — Formulario 4: estructura superior fiel al original */
+.form4 .f4-mission{
+  table-layout:fixed !important;
+  width:100% !important;
+}
+.form4 .f4-mission th,
+.form4 .f4-mission td{
+  box-sizing:border-box !important;
+}
+.form4 .f4-mission .f4-fixed{
+  text-align:left !important;
+  padding-left:5px !important;
+  white-space:nowrap !important;
+}
+.form4 .f4-mission tr:first-child th{
+  font-size:7px !important;
+  line-height:1.05 !important;
+}
+.form4 .f4-mission tr:nth-child(2) th{
+  font-size:7px !important;
+  line-height:1.05 !important;
+}
+.form4 .f4-benef{
+  table-layout:fixed !important;
+}
+.form4 .f4-benef th{
+  line-height:1.05 !important;
+}
+.form4 .f4-benef td{
+  height:18px !important;
+}
+
+
+/* V52 — Formulario 4: 7 columnas reales, con valores en sus propias celdas */
+.form4 .f4-mission{
+  width:100% !important;
+  table-layout:fixed !important;
+}
+.form4 .f4-mission th,
+.form4 .f4-mission td{
+  box-sizing:border-box !important;
+  padding:2px 3px !important;
+  vertical-align:middle !important;
+  font-size:8px !important;
+  line-height:1.05 !important;
+}
+.form4 .f4-mission .f4-fixed{
+  text-align:left !important;
+  white-space:nowrap !important;
+  padding-left:5px !important;
+}
+.form4 .f4-mission .f4-editcell{
+  text-align:center !important;
+  white-space:nowrap !important;
+}
+.form4 .f4-mission .f4-center{
+  text-align:center !important;
+}
+
+
+/* V53 — Formulario 4: estructura de 3 filas según el original */
+.form4 .f4-mission{
+  width:100% !important;
+  table-layout:fixed !important;
+  border-collapse:collapse !important;
+}
+.form4 .f4-mission th,
+.form4 .f4-mission td{
+  box-sizing:border-box !important;
+  padding:2px 4px !important;
+  vertical-align:middle !important;
+  font-size:8px !important;
+  line-height:1.05 !important;
+}
+.form4 .f4-mission tr:first-child{
+  height:31px !important;
+}
+.form4 .f4-mission tr:nth-child(2),
+.form4 .f4-mission tr:nth-child(3){
+  height:20px !important;
+}
+.form4 .f4-mission tr:first-child .f4-fixed{
+  text-align:left !important;
+  padding-left:6px !important;
+  white-space:nowrap !important;
+  font-size:9px !important;
+}
+.form4 .f4-mission .f4-center{
+  text-align:center !important;
+}
+.form4 .f4-mission .f4-editcell{
+  text-align:center !important;
+  white-space:nowrap !important;
+}
+
+
+/* V55 — Formulario 4: nombres institucionales fijos */
+.form4 .f4-fixedname{
+  text-align:left !important;
+  font-weight:700 !important;
+  padding-left:4px !important;
+}
+
+</style>
+
+<style id="marcos-colores-formularios">
+/* Marcos identificativos de cada formulario: interior blanco, solo el marco cambia */
+#form1 {
+  border: 4px solid #60a5fa !important;
+  border-radius: 12px;
+}
+#form2 {
+  border: 4px solid #4ade80 !important;
+  border-radius: 12px;
+}
+#form3 {
+  border: 4px solid #facc15 !important;
+  border-radius: 12px;
+}
+#form4 {
+  border: 4px solid #f472b6 !important;
+  border-radius: 12px;
+}
+</style>
+
+
+<style id="colores-marcos-pestanas">
+/* Solo el marco de cada pestaña: interior claro, sin colorear todo el panel */
+.tabs button:nth-child(1){border:2px solid #60a5fa !important;background:#fff;color:#174c73}
+.tabs button:nth-child(2){border:2px solid #4ade80 !important;background:#fff;color:#166534}
+.tabs button:nth-child(3){border:2px solid #facc15 !important;background:#fff;color:#854d0e}
+.tabs button:nth-child(4){border:2px solid #f472b6 !important;background:#fff;color:#9d174d}
+
+.tabs button:nth-child(1).active{border-color:#2563eb !important;background:#eff6ff}
+.tabs button:nth-child(2).active{border-color:#16a34a !important;background:#f0fdf4}
+.tabs button:nth-child(3).active{border-color:#ca8a04 !important;background:#fefce8}
+.tabs button:nth-child(4).active{border-color:#db2777 !important;background:#fdf2f8}
+</style>
+
+</head>
+<body>
+<header>
+  <h1>PAQUETE DE FORMULARIOS DE VIÁTICOS-ENTRE PARES</h1>
+  <p>ENTRE PARES PANAMÁ ESTE · FACILITADORES: JOSÉ SANTOS Y ESTEBAN AROSEMENA</p>
+</header>
+
+<div class="tabs">
+  <button class="active" data-form="1">Formulario 1 · Gestión de Cobro</button>
+  <button data-form="2">Formulario 2 · Informe de Misión</button>
+  <button data-form="3">Formulario 3 · Misión Oficial</button>
+  <button data-form="4">Formulario 4 · Viáticos y Transporte</button>
+</div>
+
+<div class="workspace">
+  <section class="panel">
+    <h2 id="panelTitle">Formulario 1 — Gestión de Cobro</h2>
+    <p class="small">Todos los campos editables empiezan en blanco.</p>
+    <div id="fields"></div>
+    <div class="toolbar" style="padding:10px 0 0;border:0">
+      <button id="print">📄 DESCARGAR PDF</button>
+      <button class="light" id="clear">↺ Limpiar</button>
+    </div>
+  </section>
+
+  <section class="sheet">
+    <div id="paper" class="paper letter"></div>
+  </section>
+</div>
+
+<script>
+const state={1:{},2:{},3:{},4:{}};
+let current=1;
+
+const configs={
+1:{
+ title:"Formulario 1 — Gestión de Cobro",
+ fields:[
+  ["nombre","Nombre del profesor"],["cedula","Cédula o RUC"],["representante","Nombre del Representante Legal"],
+  ["fechaInicio","Fecha inicial del seminario"],["fechaFin","Fecha final del seminario"]
+ ]},
+2:{
+ title:"Formulario 2 — Informe de Misión / Viáticos",
+ fields:[
+  ["servidor","Nombre del Servidor Público"],["desdeDia","Día de inicio"],["desdeMes","Mes de inicio"],
+  ["desdeAnio","Año de inicio"],["hastaDia","Día de retorno"],["hastaMes","Mes de retorno"],
+  ["hastaAnio","Año de retorno"],["informeDia","Día del informe"],["informeMes","Mes del informe"],
+  ["informeAnio","Año del informe"],["detalleInicio","Día inicial del detalle"],["detalleInicioMes","Mes inicial del detalle"],
+  ["detalleFin","Día final del detalle"],["detalleFinMes","Mes final del detalle"],
+  ["detalleAnio","Año del detalle"]
+ ]},
+3:{
+ title:"Formulario 3 — Detalle Misión Oficial",
+ fields:[
+  ["funcionario","Nombre del funcionario"],["cedula","Cédula"],["planilla","Planilla"],
+  ["delHora","Hora de salida"],["delDia","Día de salida"],["delMes","Mes de salida"],["delAnio","Año de salida"],
+  ["alHora","Hora de retorno"],["alDia","Día de retorno"],["alMes","Mes de retorno"],["alAnio","Año de retorno"],
+  ["fila1dia","Fila 1 — Día"],["fila1mes","Fila 1 — Mes"],["fila2dia","Fila 2 — Día"],["fila2mes","Fila 2 — Mes"],
+  ["fila3dia","Fila 3 — Día"],["fila3mes","Fila 3 — Mes"],["fila4dia","Fila 4 — Día"],["fila4mes","Fila 4 — Mes"],
+  ["fila5dia","Fila 5 — Día"],["fila5mes","Fila 5 — Mes"],["fechaDescripcion","Fecha dentro de la descripción"]
+ ]},
+4:{
+ title:"Formulario 4 — Solicitud y Pago de Viáticos",
+ fields:[
+  ["fechaSolicitud","Fecha de solicitud"],
+  ["misionDesdeDia","DEL — Día"],["misionDesdeMes","DEL — Mes"],["misionDesdeAnio","DEL — Año"],
+  ["misionHastaDia","AL — Día"],["misionHastaMes","AL — Mes"],["misionHastaAnio","AL — Año"],
+  ["fechaSalida","Fecha de salida"],["fechaRetorno","Fecha de retorno"],
+  ["horaSalida","Hora de salida"],["horaRetorno","Hora de retorno"],
+  ["beneficiario","A favor de (Beneficiario)"],["cedula","Cédula"],["planilla","Planilla"],
+  ["posicion","Posición"],["cargo","Cargo según función"],
+  ["residencia","Lugar de residencia del docente"],
+  ["prepara","Nombre y firma de quien prepara el formulario"],["firmaBeneficiario","Nombre y firma del beneficiario"]
+ ]}
+};
+
+function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
+function renderFields(){
+ const box=document.getElementById("fields"); box.innerHTML="";
+ configs[current].fields.forEach(([key,label])=>{
+  const d=document.createElement("div"); d.className="field";
+  d.innerHTML=`<label>${esc(label)}</label><input autocomplete="off" data-key="${key}" value="${esc(state[current][key]||"")}">`;
+  box.appendChild(d);
+  d.querySelector("input").addEventListener("input",e=>{state[current][key]=e.target.value;renderPaper()});
+ });
+}
+function v(k){return state[current][k]||""}
+
+function form1(){
+return `<div class="form1">
+  <div class="title" style="font-size:18px;line-height:1.15">REPÚBLICA DE PANAMÁ</div>
+  <div class="title" style="font-size:18px;line-height:1.15">GESTIÓN DE COBRO</div>
+
+  <div class="f1officialhead">
+    <div class="f1headleft">
+      <div class="f1headlabel">Institución</div>
+      <div class="f1officialnote">(Para Uso Oficial)</div>
+      <div class="f1headline">MEDUCA REGIONAL DE PANAMÁ ESTE</div>
+    </div>
+
+    <div class="f1headright">
+      <div class="f1headrow">
+        <div class="f1headlabel">Número de Consecutivo</div>
+        <div class="f1officialnote">(Para Uso Oficial)</div>
+        <div class="f1headline"></div>
+      </div>
+      <div class="f1headrow f1payment">
+        <div class="f1headlabel">Número de Ordenación de Pago</div>
+        <div class="f1officialnote">(Para Uso Oficial)</div>
+        <div class="f1headline"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="f1fund">
+    <div class="f1checks">
+      <div class="f1check">☐ <span>Tesoro Nacional</span></div>
+      <div class="f1check">☒ <span>Fondo Institucional</span></div>
+    </div>
+    <div class="f1fundname">
+      <div>CAPACITACIÓN DOCENTE</div>
+      <small>(Nombre del Fondo)</small>
+    </div>
+  </div>
+
+  <table class="f1party">
+    <tr><th colspan="4">A FAVOR DE</th></tr>
+    <tr>
+      <td class="f1labcell">Nombre</td>
+      <td class="f1value">${esc(v("nombre"))}</td>
+      <td class="f1labcell">Código de Proveedor</td>
+      <td class="f1value"></td>
+    </tr>
+    <tr>
+      <td class="f1labcell">Cédula o RUC</td>
+      <td class="f1value">${esc(v("cedula"))}</td>
+      <td class="f1labcell">Teléfono</td>
+      <td class="f1value"></td>
+    </tr>
+    <tr>
+      <td class="f1labcell">Nombre del Representante Legal</td>
+      <td class="f1value">${esc(v("representante"))}</td>
+      <td class="f1labcell"></td>
+      <td class="f1value"></td>
+    </tr>
+    <tr>
+      <td class="f1labcell">Firma del Representante Legal</td>
+      <td class="f1value"></td>
+      <td class="f1labcell">Cédula</td>
+      <td class="f1value"></td>
+    </tr>
+    <tr>
+      <td class="f1labcell">Endosar a nombre de</td>
+      <td class="f1value"></td>
+      <td class="f1labcell">Fecha de endoso</td>
+      <td class="f1value"></td>
+    </tr>
+  </table>
+
+  <table class="f1detail">
+    <colgroup>
+      <col style="width:20%">
+      <col style="width:42%">
+      <col style="width:38%">
+    </colgroup>
+    <tr>
+      <th>DETALLE SUSTENTADOR DEL COBRO</th>
+      <th>(Descripción del bien o servicio brindado)</th>
+      <th>VALORES EN BALBOAS</th>
+    </tr>
+    <tr>
+      <td class="f1left">Orden de Compra Núm.</td>
+      <td class="fixedtext" rowspan="5" style="text-align:center;vertical-align:top;padding:13px 18px">
+        Por participar en el Seminario de Entre Pares “Docencia Interdisciplinaria
+        En Entornos Digitales e Inteligencia Artificial” del
+        <b>${esc(v("fechaInicio"))}</b> al <b>${esc(v("fechaFin"))}</b>
+        en el Colegio Venancio Fenosa Pascual.<br><br>
+        Ver documentos adjuntos.
+      </td>
+      <td style="padding:4px 12px">
+        <div class="f1moneyrow"><span>Valor Bruto</span><b>50.00</b></div>
+        <div class="f1moneyrow"><span>Menos</span><span></span></div>
+        <div class="f1moneyrow"><span>Retención por Garantía (</span><span>___ %)</span></div>
+        <div class="f1moneyrow"><span>Anticipo (</span><span>___ %)</span></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="f1left">Contrato Núm.</td>
+      <td>
+        <div class="f1moneyrow"><span>Más</span><span></span></div>
+        <div class="f1moneyrow"><span>ITBMS</span><span></span></div>
+        <div class="f1moneyrow"><span>SUME 911</span><span></span></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="f1left">Adenda Núm.</td>
+      <td>Impuesto Selectivo al Consumo</td>
+    </tr>
+    <tr>
+      <td class="f1left">Convenio Núm.</td>
+      <td>
+        <div class="f1moneyrow"><span>Menos</span><span></span></div>
+        <div class="f1moneyrow"><span>Retención del <span class="graybox"></span> % del ITBMS</span><span></span></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="f1left">Resolución Núm.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2" class="f1left" style="height:38px">Factura(s) Número:</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2" class="f1left" style="height:34px;text-align:left">
+        Valor Total a Cobrar<br><span style="float:right">en Letras</span>
+        <span style="margin-left:18px">Cincuenta balboas con 00/100</span>
+      </td>
+      <td style="text-align:center">Valor Total en<br>Número&nbsp;&nbsp;&nbsp;&nbsp;<b>B/.50.00</b></td>
+    </tr>
+  </table>
+
+  <table class="f1sign">
+    <colgroup><col style="width:50%"><col style="width:50%"></colgroup>
+    <tr><th colspan="2">FIRMAS Y SELLOS POR REGISTROS Y AUTORIZACIÓN INSTITUCIONAL</th></tr>
+    <tr>
+      <td class="f1box"><div class="f1boxtitle">SELLO DE TESORERÍA</div><div class="f1received">RECIBIDO</div></td>
+      <td class="f1box"><div class="f1boxtitle">SELLO DE PRESUPUESTO</div></td>
+    </tr>
+    <tr>
+      <td class="f1box f1account"><div class="f1boxtitle">SELLO DE CONTABILIDAD</div><div class="f1doc">Número de Documento Contable:</div></td>
+      <td class="f1box f1authorization"><div class="f1boxtitle">AUTORIZACIÓN</div><div class="f1authtext">Firma:<br>Nombre:<br>Cédula:<br>Cargo:</div></td>
+    </tr>
+  </table>
+
+  <table class="f1control">
+    <colgroup><col style="width:73%"><col style="width:27%"></colgroup>
+    <tr><th colspan="2">FIRMA, REFRENDO Y SELLOS DE LA CONTRALORÍA GENERAL DE LA REPÚBLICA</th></tr>
+    <tr>
+      <td class="f1box f1fiscal"><div class="f1boxtitle">SELLO(S) DE FISCALIZACIÓN</div></td>
+      <td class="f1box f1refendo"><div class="f1boxtitle">REFRENDO</div><div class="f1reftext">Refrendata<br>Nombre</div></td>
+    </tr>
+  </table>
+
+  <div class="f1notice">
+    AVISO: FORMULARIO GRATUITO / DEBE LLENARSE PREFERIBLEMENTE EN COMPUTADORA / NO SERÁ ACEPTADO CON BORRONES O TACHONES NI CON ALTERACIONES SU ESTRUCTURA ESTANDARIZADA
+  </div>
+</div>`;
+}
+function form2(){
+return `<div class="form2">
+  <div class="f2-topline">
+    <span>I.</span>
+    <div>FORMULARIO: INFORME DE MISIÓN OFICIAL Y RELACIÓN DE GASTOS EN<br>
+    CONCEPTO DE PAGO POR HOSPEDAJE – VIÁTICOS DENTRO DEL PAÍS</div>
+  </div>
+
+  <div class="f2-country">REPÚBLICA DE PANAMÁ</div>
+  <div class="f2-main-title">INFORME DE MISIÓN REALIZADA Y RELACIÓN DE GASTO EN CONCEPTO DE PAGO<br>
+  POR HOSPEDAJE-VIÁTICOS DENTRO DEL PAÍS</div>
+  <div class="f2-finanzas">Dirección de Administración y Finanzas</div>
+
+  <table class="f2-info">
+    <tr>
+      <td class="f2-label">Institución</td>
+      <td class="f2-value">Meduca – Regional De Panamá Este</td>
+    </tr>
+    <tr>
+      <td class="f2-label">Nombre del Servidor Público</td>
+      <td class="f2-value f2-edit">${esc(v("servidor"))}</td>
+    </tr>
+    <tr>
+      <td class="f2-label">Dirección</td>
+      <td class="f2-value">Regional de Panamá Este</td>
+    </tr>
+    <tr>
+      <td class="f2-label">Departamento / Unidad Administrativa</td>
+      <td class="f2-value">Capacitación Docente</td>
+    </tr>
+    <tr>
+      <td class="f2-label">Período de la Misión</td>
+      <td class="f2-value f2-period">
+        Desde: <span class="f2-edit">${esc(v("desdeDia"))}</span> de
+        <span class="f2-edit">${esc(v("desdeMes"))}</span> de
+        <span class="f2-edit">${esc(v("desdeAnio"))}</span>
+        &nbsp;&nbsp;Hasta:
+        <span class="f2-edit">${esc(v("hastaDia"))}</span> de
+        <span class="f2-edit">${esc(v("hastaMes"))}</span> de
+        <span class="f2-edit">${esc(v("hastaAnio"))}</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="f2-label">Fecha del Informe</td>
+      <td class="f2-value f2-report">
+        <span class="f2-edit">${esc(v("informeDia"))}</span> de
+        <span class="f2-edit">${esc(v("informeMes"))}</span> de
+        <span class="f2-edit">${esc(v("informeAnio"))}</span>
+        <small>(dd/mm/aaaa)</small>
+      </td>
+    </tr>
+  </table>
+
+  <div class="f2-section-title"><span>I.</span> <b>Detalle de la Misión realizada:</b></div>
+
+  <div class="f2-missionbox">
+    Participación en la capacitación del Proyecto Entre Pares: “Docencia Interdisciplinaria En<br>
+    Entornos Digitales e Inteligencia Artificial” del
+    <span class="f2-edit">${esc(v("detalleInicio"))}</span> de
+    <span class="f2-edit f2-monthline">${esc(v("detalleInicioMes"))}</span>
+    al <span class="f2-edit">${esc(v("detalleFin"))}</span><br>
+    de <span class="f2-edit f2-monthline">${esc(v("detalleFinMes"))}</span> de
+    <span class="f2-edit">${esc(v("detalleAnio"))}</span> .
+  </div>
+
+  <div class="f2-section-title f2-section-ii"><span>II.</span> <b>Relación de gasto en concepto de hospedaje (*)</b></div>
+
+  <table class="f2-expense">
+    <tr>
+      <th rowspan="2" class="f2-detalle">Detalle</th>
+      <th rowspan="2" class="f2-viatico">Viático Total</th>
+      <th colspan="3">Hospedaje</th>
+    </tr>
+    <tr>
+      <th>Monto recibido</th>
+      <th>Monto pagado</th>
+      <th>Diferencia</th>
+    </tr>
+    <tr>
+      <td>Monto diario</td>
+      <td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td>
+    </tr>
+    <tr>
+      <td>Total recibido: ______________ días</td>
+      <td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td>
+    </tr>
+  </table>
+
+  <div class="f2-summary-title">Resumen:</div>
+  <div class="f2-summary">
+    <div><span>a.</span> Monto recibido para hospedaje <b>B/.0.00</b></div>
+    <div><span>b.</span> Monto pagado por hospedaje <b>B/.0.00</b></div>
+    <div><span>c.</span> Diferencia (Devolución) <b>B/.0.00</b></div>
+  </div>
+
+  <div class="f2-signatures">
+    <div class="f2-signature">
+      <div class="f2-signline"></div>
+      <div>Firma de servidor público</div>
+    </div>
+    <div class="f2-signature">
+      <div class="f2-signline"></div>
+      <div>V°B° del Director o Jefe de la unidad</div>
+    </div>
+  </div>
+
+  <div class="f2-seal">Sello</div>
+  <div class="f2-page">1</div>
+</div>`;
+}
+function form3(){
+  const rowData = [
+    [1,1],
+    [2,2],
+    [3,3],
+    [4,4],
+    [5,5]
+  ];
+  const descDate = esc(v("fechaDescripcion"));
+  const rows = [
+    ["Participación Capacitación Entre Pares",1],
+    ['Seminario "Docencia Interdisciplinaria',2],
+    ["En Entornos Digitales e inteligencia",3],
+    ['Artificial" en el Colegio Venancio Fenosa',4],
+    [descDate ? `Pascual del ${descDate}` : "Pascual del ____________________",5],
+    ["",null]
+  ].map(([txt,n])=>`<tr>
+    <td>${n?esc(v("fila"+n+"dia")):""}</td>
+    <td>${n?esc(v("fila"+n+"mes")):""}</td>
+    <td>${n ? "8:00 am" : ""}</td>
+    <td>${n ? "4:00 pm" : ""}</td>
+    <td>${txt}</td>
+    <td></td>
+  </tr>`).join("");
+  const extraRows = Array.from({length:8},()=>`<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>`).join("");
+
+  return `<div class="form3-original">
+    <div class="f3-header">
+      <div class="f3-logo"><img src="data:image/png;base64,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" alt=""></div>
+      <div class="f3-heading">
+        <div>REPÚBLICA DE PANAMÁ</div>
+        <div>MINISTERIO DE EDUCACION</div>
+        <div class="f3-title">DETALLE MISION OFICIAL</div>
+      </div>
+    </div>
+
+    <div class="f3-info">
+      <div class="f3-row">
+        <div class="f3-label">UNIDAD ADMINISTRATIVA:</div>
+        <div class="f3-line f3-wide">Meduca Regional De Panamá Este</div>
+      </div>
+      <div class="f3-row f3-dept">
+        <div class="f3-label">DEPARTAMENTO:</div>
+        <div class="f3-line f3-deptline">Capacitación Docente</div>
+        <div class="f3-label f3-cheque-label">N° DE CHEQUE:</div>
+        <div class="f3-line f3-cheque"></div>
+      </div>
+      <div class="f3-row">
+        <div class="f3-label">NOMBRE DE FUNCIONARIO:</div>
+        <div class="f3-line f3-name">${esc(v("funcionario"))}</div>
+        <div class="f3-label f3-cedula-label">CÉDULA:</div>
+        <div class="f3-line f3-cedula">${esc(v("cedula"))}</div>
+        <div class="f3-label f3-planilla-label">PLANILLA:</div>
+        <div class="f3-line f3-planilla">${esc(v("planilla"))}</div>
+      </div>
+      <div class="f3-row">
+        <div class="f3-label">LUGAR DE LA MISIÓN:</div>
+        <div class="f3-line f3-lugar">Colegio Venancio Fenosa Pascual</div>
+        <div class="f3-label f3-fondo-label">FONDO:</div>
+        <div class="f3-line f3-fondo"></div>
+      </div>
+    </div>
+
+    <div class="f3-mission-period">
+      <div class="f3-period-label">MISIÓN OFICIAL</div>
+      <div class="f3-period-row">
+        <div class="f3-period-kind">DEL</div>
+        <div class="f3-period-time">${esc(v("delHora"))}</div>
+        <div class="f3-date-cell"><div>${esc(v("delDia"))}</div><span>DIA</span></div>
+        <div class="f3-date-cell"><div>${esc(v("delMes"))}</div><span>MES</span></div>
+        <div class="f3-date-cell"><div>${esc(v("delAnio"))}</div><span>AÑO</span></div>
+      </div>
+      <div class="f3-period-row">
+        <div class="f3-period-kind">AL</div>
+        <div class="f3-period-time">${esc(v("alHora"))}</div>
+        <div class="f3-date-cell"><div>${esc(v("alDia"))}</div><span>DIA</span></div>
+        <div class="f3-date-cell"><div>${esc(v("alMes"))}</div><span>MES</span></div>
+        <div class="f3-date-cell"><div>${esc(v("alAnio"))}</div><span>AÑO</span></div>
+      </div>
+    </div>
+    <div class="f3-table-title">LUGAR DE LA MISIÓN</div>
+    <table class="f3-table">
+      <colgroup>
+        <col class="c-day"><col class="c-month"><col class="c-time"><col class="c-time">
+        <col class="c-desc"><col class="c-sign">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>DIA</th><th>MES</th><th colspan="2">HORA</th>
+          <th>DESCRIPCION DE LA MISIÓN</th>
+          <th>FIRMA CONSTANCIA EN EL LUGAR<br>DONDE SE REALIZA LA GIRA</th>
+        </tr>
+        <tr>
+          <th></th><th></th><th>ENTRADA</th><th>SALIDA</th><th></th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows}
+        ${extraRows}
+      </tbody>
+    
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</table>
+
+    <div class="f3-conclusion">
+      <b>CONCLUSIÓN DE LA MISIÓN:</b>
+      <div class="f3-conclusion-line"></div>
+      <div class="f3-conclusion-line"></div>
+    </div>
+    <div class="f3-note"><b>Nota:</b> Este de detalle de misión debe estar sellado y firmado del lugar donde asiste la misión.</div>
+  </div>`;
+}
+function form4(){
+  const fs=v("fechaSalida"), fr=v("fechaRetorno");
+  const misionDesdeDia=v("misionDesdeDia"), misionDesdeMes=v("misionDesdeMes"), misionDesdeAnio=v("misionDesdeAnio");
+  const misionHastaDia=v("misionHastaDia"), misionHastaMes=v("misionHastaMes"), misionHastaAnio=v("misionHastaAnio");
+  let dates=[];
+  function parseDate(s){
+    const m=(s||"").match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    if(!m) return null;
+    return new Date(Number(m[3]),Number(m[2])-1,Number(m[1]));
+  }
+  const a=parseDate(fs), b=parseDate(fr);
+  const monthNames=["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"];
+  const missionStart=`${misionDesdeDia || "____"} DE ${misionDesdeMes || "____________"} DE ${misionDesdeAnio || "______"}`;
+  const missionEnd=`${misionHastaDia || "____"} DE ${misionHastaMes || "____________"} DE ${misionHastaAnio || "______"}`;
+  if(a && b && b>=a){
+    for(let d=new Date(a); d<=b && dates.length<5; d.setDate(d.getDate()+1)){
+      dates.push(String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear());
+    }
+  } else {
+    dates=Array(5).fill("");
+  }
+  let transportRows="";
+  for(let i=0;i<5;i++){
+    const date=dates[i]||"";
+    transportRows += `<tr>
+      <td>${date}</td><td>TERRESTRE</td>
+      <td>${esc(v("residencia"))}</td>
+      <td>COLEGIO VENANCIO FENOSA PASCUAL</td><td>B/. 5.00</td><td rowspan="${i===0?10:1}">${i===0?"B/. 50.00":""}</td>
+    </tr>`;
+    transportRows += `<tr>
+      <td>${date}</td><td>TERRESTRE</td>
+      <td>COLEGIO VENANCIO FENOSA PASCUAL</td>
+      <td>${esc(v("residencia"))}</td><td>B/. 5.00</td>${i===0?"":"<td></td>"}
+    </tr>`;
+  }
+
+  return `<div class="form4">
+    <div class="f4-version">VERSIÓN 1.1</div>
+    <div class="f4-main-title">REPÚBLICA DE PANAMÁ</div>
+    <div class="f4-main-title">NOMBRE DE LA ENTIDAD</div>
+    <div class="f4-main-title f4-title-large">SOLICITUD Y PAGO DE VIÁTICOS Y TRANSPORTE</div>
+
+    <table class="f4-head">
+      <tr>
+        <td><b>N. de Solicitud:</b><span class="f4-line"></span></td>
+        <td class="f4-datehead"><b>Fecha (dd/mm/aaaa):</b> <span class="f4-editline">${esc(v("fechaSolicitud"))}</span></td>
+      </tr>
+      <tr><td colspan="2"><b>Unidad Administrativa Solicitante:</b> CAPACITACIÓN DOCENTE</td></tr>
+    </table>
+
+    <table class="f4-box f4-authorize">
+      <tr><td>
+        <b>El suscrito:</b> JOSÉ A. RÍOS O., autoriza tramitar la solicitud y pago de viático y transporte para la ejecución de la Misión Oficial:<br>
+        <b>ENTRE PARES, SEMINARIO TALLER: DOCENCIA INTERDISCIPLINARIA EN ENTORNOS DIGITALES E INTELIGENCIA ARTIFICIAL</b> DEL <span class="f4-inline-date">${missionStart}</span> AL <span class="f4-inline-date">${missionEnd}</span>, EN HORARIO DE 8:00 A.M. HASTA LAS 4:00 P.M. EN LAS INSTALACIONES DEL COLEGIO VENANCIO FENOSA PASCUAL, DISTRITO DE CHEPO, CORREGIMIENTO DE CHEPO, CALLE EL PASO.
+      </td></tr>
+    </table>
+
+    <table class="f4-box f4-mission">
+      <colgroup>
+        <col style="width:10.5%">
+        <col style="width:17.5%">
+        <col style="width:20.5%">
+        <col style="width:10.5%">
+        <col style="width:20.5%">
+        <col style="width:20.5%">
+      </colgroup>
+
+      <!-- FILA 1: destino ocupa prácticamente toda la fila -->
+      <tr>
+        <th>Destino de la<br>Misión Oficial</th>
+        <td class="f4-fixed" colspan="5"><b>COLEGIO VENANCIO FENOSA PASCUAL</b></td>
+      </tr>
+
+      <!-- FILA 2: salida -->
+      <tr>
+        <th>Transporte<br>Oficial</th>
+        <td class="f4-center">Sí/No</td>
+        <th>Fecha de Salida (dd/mm/aaaa)</th>
+        <td class="f4-editcell">${esc(v("fechaSalida"))}</td>
+        <th>Hora de Salida (hh:mm)</th>
+        <td class="f4-editcell">${esc(v("horaSalida"))}</td>
+      </tr>
+
+      <!-- FILA 3: retorno -->
+      <tr>
+        <th>Transporte<br>Oficial</th>
+        <td class="f4-center">NO</td>
+        <th>Fecha de Retorno (dd/mm/aaaa)</th>
+        <td class="f4-editcell">${esc(v("fechaRetorno"))}</td>
+        <th>Hora de Retorno (hh:mm)</th>
+        <td class="f4-editcell">${esc(v("horaRetorno"))}</td>
+      </tr>
+    </table>
+
+    <table class="f4-box f4-benef">
+      <colgroup>
+        <col style="width:27.5%">
+        <col style="width:9.5%">
+        <col style="width:10%">
+        <col style="width:11.5%">
+        <col style="width:18%">
+        <col style="width:23.5%">
+      </colgroup>
+      <tr>
+        <th>A favor de (Beneficiario)</th><th>Cédula</th><th>Planilla</th><th>Posición</th><th>Cargo Según Función</th><th>**Categoría</th>
+      </tr>
+      <tr>
+        <td>${esc(v("beneficiario"))}</td><td>${esc(v("cedula"))}</td><td>${esc(v("planilla"))}</td><td>${esc(v("posicion"))}</td><td>${esc(v("cargo"))}</td><td class="f4-category">OTROS SERVIDORES PÚBLICOS</td>
+      </tr>
+    </table>
+
+    <div class="f4-blue">MISIÓN OFICIAL DENTRO DEL PAÍS</div>
+    <table class="f4-box f4-viaticos">
+      <tr><th colspan="3">Viáticos Completos</th><th colspan="6">Viáticos Parciales</th></tr>
+      <tr><th>Cant. de días</th><th>Pago por día</th><th>Monto</th><th>Fecha<br>(dd/mm/aaaa)</th><th>Desayuno</th><th>Almuerzo</th><th>Cena</th><th>Hospedaje</th><th>Monto</th></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td colspan="2" class="f4-subtotal">Subtotal</td><td></td><td colspan="5" class="f4-subtotal">Subtotal</td><td></td></tr>
+    </table>
+
+    <div class="f4-totalbar">TOTAL DE VIÁTICOS COMPLETOS Y PARCIALES DENTRO DEL PAÍS <span></span></div>
+
+    <table class="f4-box f4-transport">
+      <colgroup>
+        <col style="width:13%">
+        <col style="width:14%">
+        <col style="width:24%">
+        <col style="width:24%">
+        <col style="width:12%">
+        <col style="width:13%">
+      </colgroup>
+      <tr><th colspan="6" class="f4-left">DETALLE DE TRANSPORTE</th></tr>
+      <tr><th>Fecha<br>(dd/mm/aaaa)</th><th>Tipo</th><th>Origen (desde)</th><th>Destino (hasta)</th><th>Monto</th><th>Total</th></tr>
+      ${transportRows}
+      <tr class="f4-blankrows"><td colspan="6"></td></tr>
+    </table>
+
+    <div class="f4-totalbar">TOTAL DE VIÁTICOS Y TRANSPORTE DENTRO DEL PAÍS <span>B/. 50.00</span></div>
+
+    <div class="f4-blue">MISIÓN OFICIAL EN EL EXTERIOR DEL PAÍS</div>
+    <table class="f4-box f4-exterior">
+      <tr><th>Destino</th><th>**Región</th><th>**Fecha de<br>Salida<br>(dd/mm/aaaa)</th><th>**Fecha de<br>Retorno<br>(dd/mm/aaaa)</th><th>Días</th><th>Pago por día</th><th>**%</th><th>Subtotal</th><th>Total</th></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td rowspan="4"></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </table>
+    <div class="f4-totalbar">TOTAL DE VIÁTICOS Y TRANSPORTE <span>B/. 50.00</span></div>
+
+    <div class="f4-lower">
+      <div>
+        <table class="f4-box f4-budget">
+          <tr><th colspan="2">Partidas Presupuestarias</th></tr>
+          <tr><td>CAPACITACIÓN DOCENTE</td><td>B/. 50.00</td></tr>
+          <tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr>
+          <tr><th>Total</th><th>B/. 50.00</th></tr>
+        </table>
+        <table class="f4-box f4-prepared">
+          <tr><th>Nombre y Firma de quien Prepara el Formulario</th></tr>
+          <tr><td>${esc(v("prepara"))}</td></tr>
+          <tr><th>Nombre y Firma del Beneficiario</th></tr>
+          <tr><td>${esc(v("firmaBeneficiario"))}</td></tr>
+        </table>
+      </div>
+      <div>
+        <table class="f4-box f4-signs">
+          <tr><th>Nombre y Firma del Responsable de la Unidad Administrativa Solicitante:</th></tr>
+          <tr><td class="f4-signspace f4-fixedname">KATHERINE DE ICAZA</td></tr>
+          <tr><th>Nombre y Firma del Responsable que Autoriza el Trámite de la Solicitud y Pago de Viático y Transporte:</th></tr>
+          <tr><td class="f4-signspace f4-fixedname">EDITH GONZÁLEZ</td></tr>
+          <tr><th>Nombre y Firma del Director de Administración y/o Finanzas:</th></tr>
+          <tr><td class="f4-signspace"></td></tr>
+          <tr><th>Nombre y Firma de la Máxima Autoridad:</th></tr>
+          <tr><td class="f4-signspace f4-fixedname">JOSÉ A. RÍOS O.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="f4-seals">
+      <div class="f4-sealbox"><b>DEPARTAMENTO DE TESORERÍA</b><br>SELLO, FECHA Y FIRMA<div></div></div>
+      <div class="f4-sealbox"><b>DEPARTAMENTO DE CONTABILIDAD</b><br>SELLO, FECHA Y FIRMA<div></div></div>
+      <div class="f4-sealbox"><b>DEPARTAMENTO DE PRESUPUESTO</b><br>SELLO, FECHA Y FIRMA<div></div></div>
+    </div>
+    <div class="f4-cgr"><b>OFICINA DE FISCALIZACIÓN GENERAL<br>DE LA CGR</b><br>SELLO, FECHA Y REFRENDO<div></div></div>
+  </div>`;
+}
+
+
+function renderPaper(){
+ const paper=document.getElementById("paper");
+ paper.className="paper "+(current===4?"legal":current===3?"a4":"letter"); if(current===4) paper.style.page="form4legal";
+ paper.innerHTML=current===1?form1():current===2?form2():current===3?form3():form4();
+}
+function switchForm(n){
+ current=n; document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("active",+b.dataset.form===n));
+ document.getElementById("panelTitle").textContent=configs[n].title; renderFields(); renderPaper();
+}
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>switchForm(+b.dataset.form)));
+document.getElementById("clear").addEventListener("click",()=>{state[current]={};renderFields();renderPaper()});
+document.getElementById("print").addEventListener("click",()=>window.print());
+
+switchForm(1);
+</script>
+</body>
+</html>
